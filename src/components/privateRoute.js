@@ -1,15 +1,16 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-function PrivateRoute({ component: Component, ...rest }) {
+function PrivateRoute({ component: Component, isLogged, ...rest }) {
   return (
     <Route
       {...rest}
       render={routeProps => {
-        if (localStorage.getItem("token") === null) { // On test si un utilisateur est connecté
-          return <Redirect to="/login" />;
-        } else {
+        // On test si un utilisateur est connecté
+        if (isLogged) {
           return <Component {...routeProps} />;
+        } else {
+          return <Redirect to="/login" />;
         }
       }}
     />

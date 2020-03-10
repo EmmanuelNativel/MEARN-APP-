@@ -8,7 +8,10 @@ function CreateStudent(props) {
   const [email, setEmail] = useState("");
   const [rollNo, setRollNo] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [querySuccess, setQuerySuccess] = useState(true);
+  const [alertContent, setAlertContent] = useState({
+    success: false,
+    message: ""
+  });
 
   const onNameChange = e => {
     setName(e.target.value);
@@ -32,12 +35,15 @@ function CreateStudent(props) {
       .post("http://localhost:4000/students/create-student", studentObject)
       .then(res => {
         setShowAlert(true);
-        setQuerySuccess(true);
+        setAlertContent({
+          success: true,
+          message: "Etudiant créé avec succès !"
+        });
       })
       .catch(error => {
         setShowAlert(true);
-        setQuerySuccess(false);
-        console.log("Error CREATE : ", error);
+        setAlertContent({ success: false, message: error.response.data.text });
+        //console.log("Error CREATE : ", error.response.data.text);
       });
 
     setName("");
@@ -60,7 +66,11 @@ function CreateStudent(props) {
 
         <Form.Group controlId="Name">
           <Form.Label>Roll No</Form.Label>
-          <Form.Control type="text" value={rollNo} onChange={onRollNoChange} />
+          <Form.Control
+            type="number"
+            value={rollNo}
+            onChange={onRollNoChange}
+          />
         </Form.Group>
 
         <Button variant="danger" size="lg" block="block" type="submit">
@@ -70,12 +80,12 @@ function CreateStudent(props) {
 
       {showAlert && (
         <Alert
-          variant={querySuccess ? "success" : "danger"}
+          variant={alertContent.success ? "success" : "danger"}
           className="w-50"
           dismissible
           onClose={() => setShowAlert(false)}
         >
-          Student successfully created !
+          {alertContent.message}
         </Alert>
       )}
     </div>

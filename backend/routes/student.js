@@ -6,8 +6,18 @@ let mongoose = require("mongoose"),
 let studentSchema = require("../models/Student");
 
 // CREATE Student
-router.route("/create-student").post((req, res, next) => {
+router.route("/create-student").post(async (req, res, next) => {
   console.log("CREATE");
+
+  const findStudent = await studentSchema.findOne({ email: req.body.email });
+
+  if (findStudent) {
+    console.log("Student already exist !");
+    return res.status(400).json({
+      text: "Cet addresse mail est déjà utilisée."
+    });
+  }
+
   studentSchema.create(req.body, (error, data) => {
     if (error) {
       return next(error);

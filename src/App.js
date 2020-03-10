@@ -13,10 +13,6 @@ import LoginPage from "./components/loginPage";
 import SignupPage from "./components/signupPage";
 import PrivateRoute from "./components/privateRoute";
 
-/**
- * TODO: Afficher les messages d'erreur dans des Alertes + Sécuriser les routes
- */
-
 function App() {
   const [isLogged, setIsLogged] = useState(false);
 
@@ -95,9 +91,21 @@ function App() {
                     )}
                   />
                   <Route path="/signup" component={SignupPage} />
-                  <PrivateRoute path="/createStudent" component={CreateStudent} />
-                  <PrivateRoute path="/editStudent/:id" component={EditStudent} />
-                  <PrivateRoute path="/listStudent" component={StudentList} />
+                  <PrivateRoute
+                    path="/createStudent"
+                    component={CreateStudent}
+                    isLogged={isLogged}
+                  />
+                  <PrivateRoute
+                    path="/editStudent/:id"
+                    component={EditStudent}
+                    isLogged={isLogged}
+                  />
+                  <PrivateRoute
+                    path="/listStudent"
+                    component={StudentList}
+                    isLogged={isLogged}
+                  />
                   <Route component={error404} />
                 </Switch>
               </div>
