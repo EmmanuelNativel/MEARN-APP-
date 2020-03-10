@@ -11,12 +11,18 @@ import StudentList from "./components/studentList";
 import error404 from "./components/error404";
 import LoginPage from "./components/loginPage";
 import SignupPage from "./components/signupPage";
+import PrivateRoute from "./components/privateRoute";
+
+/**
+ * TODO: Afficher les messages d'erreur dans des Alertes + Sécuriser les routes
+ */
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
 
   const handleLogOut = e => {
-    localStorage.setItem("token", ""); // On efface le token dans le localStorage
+    //localStorage.setItem("token", ""); // On efface le token dans le localStorage
+    localStorage.clear();
     setIsLogged(false);
   };
 
@@ -89,9 +95,9 @@ function App() {
                     )}
                   />
                   <Route path="/signup" component={SignupPage} />
-                  <Route path="/createStudent" component={CreateStudent} />
-                  <Route path="/editStudent/:id" component={EditStudent} />
-                  <Route path="/listStudent" component={StudentList} />
+                  <PrivateRoute path="/createStudent" component={CreateStudent} />
+                  <PrivateRoute path="/editStudent/:id" component={EditStudent} />
+                  <PrivateRoute path="/listStudent" component={StudentList} />
                   <Route component={error404} />
                 </Switch>
               </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 
-function SignupPage() {
+function SignupPage({ history }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
@@ -31,6 +31,7 @@ function SignupPage() {
       })
       .then(res => {
         console.log(res.data.text);
+        history.push("/listStudent", {});
       })
       .catch(error => {
         if (error.response === undefined) console.log("Erreur", error);
@@ -42,7 +43,7 @@ function SignupPage() {
     <div className="form-wrapper">
       <h1 className="text-center">Page d'inscription</h1>
       <Form onSubmit={handleSubmit}>
-        <Form.Group>
+        <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="text"
@@ -51,7 +52,7 @@ function SignupPage() {
           />
         </Form.Group>
 
-        <Form.Group>
+        <Form.Group controlId="password">
           <Form.Label>Mot de passe</Form.Label>
           <Form.Control
             type="password"
@@ -60,7 +61,7 @@ function SignupPage() {
           />
         </Form.Group>
 
-        <Form.Group>
+        <Form.Group controlId="passwordConf">
           <Form.Label>Confirmez votre mot de passe</Form.Label>
           <Form.Control
             type="password"

@@ -40,7 +40,7 @@ function LoginPage({ onConnexion, history }) {
     <div className="form-wrapper">
       <h1 className="text-center">Page de connexion</h1>
       <Form onSubmit={handleSubmit}>
-        <Form.Group>
+        <Form.Group controlId="email" >
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
@@ -49,7 +49,7 @@ function LoginPage({ onConnexion, history }) {
           />
         </Form.Group>
 
-        <Form.Group>
+        <Form.Group controlId="password">
           <Form.Label>Mot de passe</Form.Label>
           <Form.Control
             type="password"
